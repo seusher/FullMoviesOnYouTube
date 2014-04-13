@@ -2,7 +2,7 @@ var http = require("http");
 var url = require("url");
 var requestApi = require("request");
 
-function start() {
+
 	function onRequest(request, response) {
 
 		var hostname = url.parse(request.url).host;
@@ -55,8 +55,6 @@ function start() {
 		});
 	}
 	
-	http.createServer(onRequest).listen(80);
+	var port = process.env.PORT || 80;
+	http.createServer(onRequest).listen(port);
 	//console.log("Server has started.");
-}
-
-exports.start = start;
