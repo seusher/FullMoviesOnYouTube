@@ -31,6 +31,7 @@ var async = require("async");
 			requestUrl += "?after=" + afterToken;
 		}
 		
+		//console.log(requestUrl);
 		requestApi(requestUrl, function(error, localResponse, body) {
 			var out = JSON.parse(body);
 			
@@ -53,6 +54,7 @@ var async = require("async");
 				urlList[i] = imdbUrl;
 				
 				var fun = function(url2, callback){
+									//console.log("Url2: " + url2);
 									requestApi(url2, function(rottenError, rottenResponse, rottenBody) {
 										
 										var year = "";
@@ -108,11 +110,13 @@ var async = require("async");
 										
 										if (service == "youtube")
 										{
-											console.log(out["data"]["children"][customId]["data"]["media"]);
+											if (out["data"]["children"][customId]["data"]["media"])
+											{
 											rottenBody += "<img src=\""+ out["data"]["children"][customId]["data"]["media"]["oembed"]["thumbnail_url"] + "\"/><p/>"
+											}
 											rottenBody += plot + "<p/>"
 											rottenBody += "<b>Year:</b> " + year + "  <b>Audience Rating:</b> " + rating +  "<p/>"
-											rottenBody += "<span class=\"bg\" ><a href=\""+ out["data"]["children"][customId]["data"]["media"]["oembed"]["url"] + "\">Link</a></span><p/>"
+											rottenBody += "<span class=\"bg\" ><a href=\""+ out["data"]["children"][customId]["data"]["url"] + "\">Link</a></span><p/>"
 										}
 										else if (service == "vimeo")
 										{
